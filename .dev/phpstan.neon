@@ -1,0 +1,9 @@
+parameters:
+    level: 8
+    paths:
+        - ../src
+        - ../tests
+    ignoreErrors:
+        -
+            message: '#Call to an undefined static method ___\\d::[A-Z0-9]+\(\)\.#'
+            identifier: staticMethod.notFound
