@@ -12,24 +12,24 @@ composer require --dev the-ge/phpcsfixer-fixers
 
 ### `TheGe/classy_declaration_after_two_blank_lines`
 
-Ensures every named classy declaration (`class`, `interface`, `trait`, `enum`) — including its
-docblock, attributes, and modifiers (`abstract`, `final`, `readonly`) — is preceded by exactly
-**two blank lines** (three newline characters).
+Ensures every named classy declaration (`class`, `interface`, `trait`, `enum`) — including its modifiers (`abstract`, `final`, `readonly`) and its metadata (comments, docblock, attributes) — is preceded by exactly **two blank lines** (three newline characters).
 
 Anonymous classes (`new class`) are excluded.
 
-**Priority:** `-25` (runs after `blank_line_after_namespace`, `no_blank_lines_after_phpdoc`, and
+**Priority:** `-24` (runs after `blank_line_after_namespace`, `no_blank_lines_after_phpdoc`, and
 `single_line_after_imports`).
 
 #### Example
 
+Configuration: `['blank_lines_count' => 2]`
+
 ```php
 // Before
-$x = 1;
+namespace N;
 class Foo {}
 
 // After
-$x = 1;
+namespace N;
 
 
 class Foo {}
