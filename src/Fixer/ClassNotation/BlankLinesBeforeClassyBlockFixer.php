@@ -47,7 +47,7 @@ final class BlankLinesBeforeClassyBlockFixer extends AbstractFixer implements Co
     /** @use ConfigurableFixerTrait<_InputConfiguration, _ComputedConfiguration> */
     use ConfigurableFixerTrait;
 
-    public const RULE       = 'TheGe/classy_declaration_after_two_blank_lines';
+    public const RULE       = 'TheGe/blank_lines_before_classy_block';
     public const PRIORITY   = -24;
     public const LINES_MIN  = 0; // min 1 line feed
     public const LINES_OK   = 2; // 3 line feeds

@@ -10,7 +10,7 @@ composer require --dev the-ge/phpcsfixer-fixers
 
 ## Fixers
 
-### `TheGe/classy_declaration_after_two_blank_lines`
+### `TheGe/blank_lines_before_classy_block`
 
 Ensures every named classy declaration (`class`, `interface`, `trait`, `enum`) — including its modifiers (`abstract`, `final`, `readonly`) and its metadata (comments, docblock, attributes) — is preceded by exactly **two blank lines** (three newline characters).
 
@@ -39,12 +39,12 @@ class Foo {}
 
 ```php
 // .php-cs-fixer.dist.php
-use TheGe\PhpCsFixer\Fixer\ClassNotation\ClassyDeclarationAfterTwoBlankLinesFixer;
+use TheGe\PhpCsFixer\Fixer\ClassNotation\BlankLinesBeforeClassyBlockFixer;
 
 return (new PhpCsFixer\Config())
-    ->registerCustomFixers([new ClassyDeclarationAfterTwoBlankLinesFixer()])
+    ->registerCustomFixers([new BlankLinesBeforeClassyBlockFixer()])
     ->setRules([
-        'TheGe/classy_declaration_after_two_blank_lines' => true,
+        'TheGe/blank_lines_before_classy_block' => true,
     ]);
 ```
 
