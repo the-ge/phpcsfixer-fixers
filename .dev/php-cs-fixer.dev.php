@@ -20,7 +20,7 @@ use PhpCsFixerCustomFixers\Fixer\NoUselessDirnameCallFixer;
 use PhpCsFixerCustomFixers\Fixer\NoUselessParenthesisFixer;
 use PhpCsFixerCustomFixers\Fixer\PromotedConstructorPropertyFixer;
 use PhpCsFixerCustomFixers\Fixer\StringableInterfaceFixer;
-//use TheGe\PhpCsFixer\Fixer\ClassNotation\ClassyDeclarationAfterTwoBlankLinesFixer;
+use TheGe\PhpCsFixer\Fixer\ClassNotation\BlankLinesBeforeClassyBlockFixer;
 
 //fwrite(STDOUT, var_export(PhpCsFixer\Runner\Parallel\ParallelConfigFactory::detect(), true));
 
@@ -31,7 +31,7 @@ return (new Config())
     ->setUsingCache(false) // or
     //->setCacheFile(__DIR__.'/.php-cs-fixer.cache')
     ->registerCustomFixers(new PhpCsFixerCustomFixers\Fixers())              // composer require --dev kubawerlos/php-cs-fixer-custom-fixers
-    //->registerCustomFixers([new ClassyDeclarationAfterTwoBlankLinesFixer()]) // composer require --dev thege/thege-phpcsfixer-fixers
+    ->registerCustomFixers([new BlankLinesBeforeClassyBlockFixer()]) // composer require --dev thege/thege-phpcsfixer-fixers
     ->setFinder((new Finder())
         ->in(__DIR__)
         ->name('*.php')
@@ -367,11 +367,11 @@ return (new Config())
             'space'                => 'none',
             'space_multiple_catch' => null,
         ],
-        DeclareAfterOpeningTagFixer::name()              => true,
-        NoUselessDirnameCallFixer::name()                => true,
-        NoUselessParenthesisFixer::name()                => true,
-        PromotedConstructorPropertyFixer::name()         => \PHP_VERSION_ID >= 80000, // [PHP 8.0+]
-        StringableInterfaceFixer::name()                 => \PHP_VERSION_ID >= 80000, // [PHP 8.0+]
-        //'TheGe/classy_declaration_after_two_blank_lines' => true,
+        DeclareAfterOpeningTagFixer::name()           => true,
+        NoUselessDirnameCallFixer::name()             => true,
+        NoUselessParenthesisFixer::name()             => true,
+        PromotedConstructorPropertyFixer::name()      => \PHP_VERSION_ID >= 80000, // [PHP 8.0+]
+        StringableInterfaceFixer::name()              => \PHP_VERSION_ID >= 80000, // [PHP 8.0+]
+        'TheGe/TheGe/blank_lines_before_classy_block' => true,
     ])
 ;
