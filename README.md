@@ -50,7 +50,7 @@ return (new PhpCsFixer\Config())
 
 ## Requirements
 
-- PHP 8.0 – 8.4
+- PHP 8.1 – 8.4
 - friendsofphp/php-cs-fixer ^3.94
 
 ## Running Tests
