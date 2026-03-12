@@ -56,6 +56,6 @@ return (new PhpCsFixer\Config())
 ## Running Tests
 
 ```bash
-composer install
-vendor/bin/phpunit
+composer boot
+composer test
 ```
