@@ -35,9 +35,6 @@
     },
     "config": {
         "sort-packages": true,
-        "preferred-install": {
-            "friendsofphp/php-cs-fixer": "source"
-        },
         "allow-plugins": {
             "dealerdirect/phpcodesniffer-composer-installer": true
         }
