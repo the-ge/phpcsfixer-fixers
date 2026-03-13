@@ -48,6 +48,7 @@ final class BlankLinesBeforeClassyBlockFixer extends AbstractFixer implements Co
     use ConfigurableFixerTrait;
 
     public const RULE       = 'TheGe/blank_lines_before_classy_block';
+    public const CONFIG     = 'blank_lines_count';
     public const PRIORITY   = -24;
     public const LINES_MIN  = 0; // min 1 line feed
     public const LINES_OK   = 2; // 3 line feeds
@@ -70,7 +71,7 @@ final class BlankLinesBeforeClassyBlockFixer extends AbstractFixer implements Co
     protected function createConfigurationDefinition(): FixerConfigurationResolverInterface
     {
         return new FixerConfigurationResolver([
-            (new FixerOptionBuilder('blank_lines_count', 'The desired count of blank lines before named classy declaration and its metadata.'))
+            (new FixerOptionBuilder(self::CONFIG, 'The desired count of blank lines before named classy declaration and its metadata.'))
                 ->setAllowedTypes(['int'])
                 ->setDefault(self::LINES_OK)
                 ->setNormalizer(static function(Options $options, int $value): int {
@@ -109,6 +110,10 @@ final class BlankLinesBeforeClassyBlockFixer extends AbstractFixer implements Co
 
     protected function applyFix(\SplFileInfo $file, Tokens $tokens): void
     {
+        /** @var int $blankLinesCount */
+        $blankLinesCount = $this->configuration[self::CONFIG] ?? self::LINES_OK;
+        $fixedLFCount = $blankLinesCount + 1;
+
         // Iterate backwards so that any token insertions do not shift indexes of
         // declarations that have not been processed yet.
         /** @var int<0, max> $fixIndex */
@@ -152,15 +157,14 @@ final class BlankLinesBeforeClassyBlockFixer extends AbstractFixer implements Co
                 break; // non-classy, non-metadaty, non-whitespace token found at prevIndex
             }
 
-            $this->enforceRule($tokens, $fixIndex, $prevIndex);
+            $this->enforceRule($tokens, $fixIndex, $prevIndex, $fixedLFCount);
         }
     }
 
-    private function enforceRule(Tokens &$tokens, int $fixIndex, int $prevNonWSIndex): void
+    private function enforceRule(Tokens &$tokens, int $fixIndex, int $prevNonWSIndex, int $fixedLFCount): void
     {
         $newWhitespace = fn(string $content): Token => new Token([\T_WHITESPACE, $content]);
         $hasGap        = $fixIndex - $prevNonWSIndex > 1;
-        $fixedLFCount  = $this->configuration['blank_lines_count'] + 1;
         $fixedContent  = str_repeat("\n", $fixedLFCount);
         $prevContent   = $tokens[$prevNonWSIndex]->getContent();
 
