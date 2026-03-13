@@ -5,5 +5,7 @@ parameters:
         - ../tests
     ignoreErrors:
         -
+            # Local debug class that may/may not be present
             message: '#Call to an undefined static method ___\\d::[A-Z0-9]+\(\)\.#'
             identifier: staticMethod.notFound
+            reportUnmatched: false
