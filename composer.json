@@ -18,14 +18,15 @@
         }
     },
     "require-dev": {
+        "friendsofphp/php-cs-fixer": "^3.94",
+        "kubawerlos/php-cs-fixer-custom-fixers": "dev-main",
         "php-parallel-lint/php-console-highlighter": "^1.0",
         "php-parallel-lint/php-parallel-lint": "^1.4",
         "phpcompatibility/php-compatibility": "^10.0.0@dev",
         "phpstan/phpstan": "^2.0",
         "phpunit/phpunit": "^13.0",
         "slevomat/coding-standard": "^8.26",
-        "friendsofphp/php-cs-fixer": "^3.94",
-        "the-ge/phpcsfixer-config": "^1.0"
+        "squizlabs/php_codesniffer": "^4.0"
     },
     "autoload-dev": {
         "psr-4": {
@@ -41,14 +42,14 @@
     },
     "scripts": {
         "boot":        "composer install --optimize-autoloader",
-        "compat":      "vendor/bin/phpcs -p src --standard=PHPCompatibility --runtime-set testVersion 8.4",
+        "compat":      "vendor/bin/phpcs -p src tests --standard=PHPCompatibility --runtime-set testVersion 8.4",
         "lint":        "vendor/bin/parallel-lint src tests",
         "stan:clear":  "vendor/bin/phpstan clear-result-cache",
         "stan":        "vendor/bin/phpstan analyse --configuration=.dev/phpstan.neon",
         "test:config": "vendor/bin/phpunit --check-php-configuration",
         "test":        "vendor/bin/phpunit --configuration .dev/phpunit.xml",
-        "fix:dry":     "vendor/bin/php-cs-fixer fix src tests --config=vendor/the-ge/phpcsfixer-config/src/php-cs-fixer.dist.php --show-progress=dots --dry-run --diff",
-        "fix":         "vendor/bin/php-cs-fixer fix src tests --config=vendor/the-ge/phpcsfixer-config/src/php-cs-fixer.dist.php --show-progress=dots",
+        "fix:dry":     "vendor/bin/php-cs-fixer fix src tests --config=.dev/php-cs-fixer.dev.php --show-progress=dots --dry-run --diff",
+        "fix":         "vendor/bin/php-cs-fixer fix src tests --config=.dev/php-cs-fixer.dev.php --show-progress=dots",
         "deploy":      "composer install --no-dev --classmap-authoritative"
     },
     "minimum-stability": "dev",

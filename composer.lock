@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "556c061c49d84d63310bc7073384e7d6",
+    "content-hash": "9ee162f2f9f968d4c4a350dca7a30e7b",
     "packages": [],
     "packages-dev": [
         {
@@ -5082,52 +5082,6 @@
             "time": "2026-02-09T10:14:57+00:00"
         },
         {
-            "name": "the-ge/phpcsfixer-config",
-            "version": "1.0.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/the-ge/phpcsfixer-config.git",
-                "reference": "893bd1830b7cee1f80361fb8a9f8f60af57313b0"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/the-ge/phpcsfixer-config/zipball/893bd1830b7cee1f80361fb8a9f8f60af57313b0",
-                "reference": "893bd1830b7cee1f80361fb8a9f8f60af57313b0",
-                "shasum": ""
-            },
-            "require": {
-                "friendsofphp/php-cs-fixer": "^3",
-                "kubawerlos/php-cs-fixer-custom-fixers": "dev-main",
-                "php": "^7.4|^8.0|^8.1|^8.2|^8.3|^8.4|^8.5",
-                "the-ge/phpcsfixer-fixers": "dev-main"
-            },
-            "require-dev": {
-                "php-parallel-lint/php-console-highlighter": "^1.0",
-                "php-parallel-lint/php-parallel-lint": "^1.4",
-                "phpcompatibility/php-compatibility": "^10.0@alpha",
-                "phpstan/phpstan": "^2.0",
-                "slevomat/coding-standard": "^8.26",
-                "squizlabs/php_codesniffer": "^4.0"
-            },
-            "type": "library",
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Gabriel Tenita",
-                    "email": "the.ge@tenita.eu"
-                }
-            ],
-            "description": "The Ge's PHP CS Fixer configuration",
-            "support": {
-                "issues": "https://github.com/the-ge/phpcsfixer-config/issues",
-                "source": "https://github.com/the-ge/phpcsfixer-config/tree/1.0.0"
-            },
-            "time": "2026-03-12T16:59:52+00:00"
-        },
-        {
             "name": "theseer/tokenizer",
             "version": "2.0.1",
             "source": {
@@ -5181,6 +5135,7 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
+        "kubawerlos/php-cs-fixer-custom-fixers": 20,
         "phpcompatibility/php-compatibility": 20
     },
     "prefer-stable": true,
