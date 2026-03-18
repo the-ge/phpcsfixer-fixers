@@ -17,7 +17,6 @@ require './vendor/autoload.php';
 use PhpCsFixer\Config;
 use PhpCsFixer\Finder;
 use PhpCsFixer\Runner\Parallel\ParallelConfigFactory;
-use TheGe\PhpCsFixer\Fixer\ClassNotation\BlankLinesBeforeClassyBlockFixer;
 
 //fwrite(STDOUT, var_export(PhpCsFixer\Runner\Parallel\ParallelConfigFactory::detect(), true));
 
@@ -31,8 +30,8 @@ return (new Config())
     ->setRiskyAllowed(true)
     ->setUsingCache(false) // or
     //->setCacheFile(__DIR__.'/.php-cs-fixer.cache')
-    ->registerCustomFixers(new PhpCsFixerCustomFixers\Fixers())              // composer require --dev kubawerlos/php-cs-fixer-custom-fixers
-    ->registerCustomFixers([new BlankLinesBeforeClassyBlockFixer()]) // composer require --dev thege/thege-phpcsfixer-fixers
+    ->registerCustomFixers(new \PhpCsFixerCustomFixers\Fixers())  // composer require --dev kubawerlos/php-cs-fixer-custom-fixers
+    ->registerCustomFixers(new \TheGe\PhpCsFixer\Fixers())        // composer require --dev thege/thege-phpcsfixer-fixers
     ->setFinder(
         (new Finder())
         ->in(__DIR__)
