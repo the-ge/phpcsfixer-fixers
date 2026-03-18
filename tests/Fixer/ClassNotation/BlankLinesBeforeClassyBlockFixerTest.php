@@ -21,6 +21,7 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use TheGe\PhpCsFixer\Fixer\ClassNotation\BlankLinesBeforeClassyBlockFixer;
 use TheGe\PhpCsFixer\Tests\AbstractFixerTestCase;
 
+
 /**
  * @covers \TheGe\PhpCsFixer\Fixer\ClassNotation\BlankLinesBeforeClassyBlockFixer
  *
@@ -52,7 +53,7 @@ final class BlankLinesBeforeClassyBlockFixerTest extends AbstractFixerTestCase
      */
     #[DataProvider('provideInvalidConfigurationCases')]
     public function testInvalidConfiguration(
-        array $configuration,
+        array  $configuration,
         string $exceptionMessage,
         string $exception = InvalidFixerConfigurationException::class,
     ): void {
@@ -90,9 +91,9 @@ final class BlankLinesBeforeClassyBlockFixerTest extends AbstractFixerTestCase
      */
     #[DataProvider('provideSkippableTestCases')]
     public function testSkippableCase(
-        string $expected,
+        string  $expected,
         ?string $input = null,
-        array $configuration = [],
+        array   $configuration = [],
     ): void {
         $this->getFixer()->configure($configuration);
         $this->doSkippableTest($expected);
@@ -132,7 +133,7 @@ final class BlankLinesBeforeClassyBlockFixerTest extends AbstractFixerTestCase
             // anonymous class
             [$description, $expected, $input] = self::codesetToSkippableCase([
                 [self::SKIP, $precodeLabel, $precode],
-                [self::SKIP, $spaceLabel  , $space],
+                [self::SKIP, $spaceLabel, $space],
                 [self::SKIP, 'anonymousClass', "\$obj = new class() {};\n"],
             ], $xLF);
             yield $description => [$expected, $input, $configuration];
@@ -140,7 +141,7 @@ final class BlankLinesBeforeClassyBlockFixerTest extends AbstractFixerTestCase
             // readonly anonymous class; PHP 8.3+
             [$description, $expected, $input] = self::codesetToSkippableCase([
                 [self::SKIP, $precodeLabel, $precode],
-                [self::SKIP, $spaceLabel  , $space],
+                [self::SKIP, $spaceLabel, $space],
                 [self::SKIP, 'readonly-anonymous-class', "\$obj = new readonly class() {};\n"],
             ], $xLF);
             yield $description => [$expected, $input, $configuration];
@@ -172,7 +173,7 @@ final class BlankLinesBeforeClassyBlockFixerTest extends AbstractFixerTestCase
     public function testFixableCase(
         string $expected,
         string $input,
-        array $configuration = [],
+        array  $configuration = [],
     ): void {
         $this->getFixer()->configure($configuration);
         $this->doFixableTest($expected, $input);
@@ -211,10 +212,10 @@ final class BlankLinesBeforeClassyBlockFixerTest extends AbstractFixerTestCase
             foreach (self::classyGapBad($xLF) as [$gapLabel, $gap]) {
                 [$description, $expected, $input] = self::codesetToFixableCase([
                     [self::SKIP, $precodeLabel, $precode],
-                    [self::FIX , $gapLabel    , $gap],
-                    [self::SKIP, $classCLabel , $classC],
-                    [self::FIX , $gapLabel    , $gap],
-                    [self::SKIP, $classDLabel , $classD],
+                    [self::FIX, $gapLabel, $gap],
+                    [self::SKIP, $classCLabel, $classC],
+                    [self::FIX, $gapLabel, $gap],
+                    [self::SKIP, $classDLabel, $classD],
                 ], $xLF);
                 yield $description => [$expected, $input, $configuration];
             }
@@ -232,8 +233,8 @@ final class BlankLinesBeforeClassyBlockFixerTest extends AbstractFixerTestCase
             foreach (self::precode() as [$precodeLabel, $precode]) {
                 foreach (self::declaration($gapLabel, $gap) as [$declarationLabel, $declaration]) {
                     yield [
-                        [self::SKIP, $precodeLabel    , $precode],
-                        [$action  , $gapLabel , $gap],
+                        [self::SKIP, $precodeLabel, $precode],
+                        [$action, $gapLabel, $gap],
                         [self::SKIP, $declarationLabel, $declaration],
                     ];
                 }
@@ -254,11 +255,11 @@ final class BlankLinesBeforeClassyBlockFixerTest extends AbstractFixerTestCase
                 foreach (self::declaration($classyGapLabel, $classyGap) as [$declarationLabel, $declaration]) {
                     foreach (($action ? self::metadataGapBad() : [self::metadataGapOk()]) as [$metadataGapLabel, $metadataGap]) {
                         yield [
-                            [self::SKIP        , $precodeLabel    , $precode],
-                            [$action           , $classyGapLabel  , $classyGap],
-                            [self::SKIP        , $metadataLabel   , $metadata],
-                            [$action | self::META, $metadataGapLabel, $metadataGap],
-                            [self::SKIP        , $declarationLabel, $declaration],
+                            [self::SKIP, $precodeLabel, $precode],
+                            [$action, $classyGapLabel, $classyGap],
+                            [self::SKIP, $metadataLabel, $metadata],
+                            [$action|self::META, $metadataGapLabel, $metadataGap],
+                            [self::SKIP, $declarationLabel, $declaration],
                         ];
                     }
                 }
@@ -271,13 +272,13 @@ final class BlankLinesBeforeClassyBlockFixerTest extends AbstractFixerTestCase
                     foreach (self::metadata() as [$metadata2Label, $metadata2]) {
                         foreach (self::declaration($classyGapLabel, $classyGap) as [$declarationLabel, $declaration]) {
                             yield [
-                                [self::SKIP        , $precodeLabel    , $precode],
-                                [$action           , $classyGapLabel  , $classyGap],
-                                [self::SKIP        , $metadata1Label  , $metadata1],
-                                [$action | self::META, $metadataGapLabel, $metadataGap],
-                                [self::SKIP        , $metadata2Label  , $metadata2],
-                                [$action | self::META, $metadataGapLabel, $metadataGap],
-                                [self::SKIP        , $declarationLabel, $declaration],
+                                [self::SKIP, $precodeLabel, $precode],
+                                [$action, $classyGapLabel, $classyGap],
+                                [self::SKIP, $metadata1Label, $metadata1],
+                                [$action|self::META, $metadataGapLabel, $metadataGap],
+                                [self::SKIP, $metadata2Label, $metadata2],
+                                [$action|self::META, $metadataGapLabel, $metadataGap],
+                                [self::SKIP, $declarationLabel, $declaration],
                             ];
                         }
                     }
@@ -376,9 +377,9 @@ final class BlankLinesBeforeClassyBlockFixerTest extends AbstractFixerTestCase
     private static function modifier(): iterable
     {
         foreach ([
-            ['abstract'      , 'abstract'],
-            ['final'         , 'final'],
-            ['readonly'      , 'readonly'], // PHP 8.2+
+            ['abstract', 'abstract'],
+            ['final', 'final'],
+            ['readonly', 'readonly'], // PHP 8.2+
             ['final-readonly', 'final readonly'], // PHP 8.2+
         ] as [$label, $code]) {
             yield [$label, $code];
@@ -392,17 +393,17 @@ final class BlankLinesBeforeClassyBlockFixerTest extends AbstractFixerTestCase
         foreach ([
             [$classLabel, $classCode],
             ['interface', 'interface I {}'],
-            ['trait'    , 'trait T {}'],
-            ['enum'     , "enum Suit: string { case Hearts = 'H'; }"], // PHP 8.2+
+            ['trait', 'trait T {}'],
+            ['enum', "enum Suit: string { case Hearts = 'H'; }"], // PHP 8.2+
         ] as [$label, $code]) {
             yield [$label, "{$code}\n"];
         }
 
         foreach (self::modifier() as [$modifierLabel, $modifier]) {
             $dataset = [
-                [self::SKIP, $modifierLabel  , $modifier],
+                [self::SKIP, $modifierLabel, $modifier],
                 [self::SKIP, $whitespaceLabel, $whitespace],
-                [self::SKIP, $classLabel     , $classCode],
+                [self::SKIP, $classLabel, $classCode],
             ];
             $code = self::code($dataset);
             yield [self::description($dataset), "{$code}\n"];
@@ -441,7 +442,7 @@ final class BlankLinesBeforeClassyBlockFixerTest extends AbstractFixerTestCase
                     [$label, $code] = self::classyGapOk($xLF);
                     $code .= $indent;
                     break;
-                case self::FIX | self::META:
+                case self::FIX|self::META:
                     [$label, $code] = self::metadataGapOk();
                     break;
             }

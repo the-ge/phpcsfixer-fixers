@@ -34,6 +34,7 @@ use PhpCsFixer\Tokenizer\Tokens;
 use Symfony\Component\OptionsResolver\Options;
 use TheGe\PhpCsFixer\Fixer\AbstractFixer;
 
+
 /**
  * @phpstan-type _InputConfiguration array{blank_lines_count?: int}
  * @phpstan-type _ComputedConfiguration array{blank_lines_count: int}
@@ -112,7 +113,7 @@ final class BlankLinesBeforeClassyBlockFixer extends AbstractFixer implements Co
     {
         /** @var int $blankLinesCount */
         $blankLinesCount = $this->configuration[self::CONFIG] ?? self::LINES_OK;
-        $fixedLFCount = $blankLinesCount + 1;
+        $fixedLFCount    = $blankLinesCount + 1;
 
         // Iterate backwards so that any token insertions do not shift indexes of
         // declarations that have not been processed yet.

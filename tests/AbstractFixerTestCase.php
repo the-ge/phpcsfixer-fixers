@@ -21,6 +21,7 @@ use PhpCsFixer\Fixer\FixerInterface;
 use PhpCsFixer\Tokenizer\Tokens;
 use PHPUnit\Framework\TestCase;
 
+
 abstract class AbstractFixerTestCase extends TestCase
 {
     private FixerInterface $fixer;

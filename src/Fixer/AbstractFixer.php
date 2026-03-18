@@ -22,6 +22,7 @@ use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Tokenizer\Tokens;
 use PhpCsFixer\WhitespacesFixerConfig;
 
+
 abstract class AbstractFixer implements FixerInterface
 {
     protected const RULE = '';
