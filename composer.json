@@ -46,6 +46,7 @@
         "lint":        "vendor/bin/parallel-lint src tests",
         "stan:clear":  "vendor/bin/phpstan clear-result-cache",
         "stan":        "vendor/bin/phpstan analyse --configuration=.dev/phpstan.neon",
+        "check":      ["@compat", "@lint", "@stan"],
         "test:config": "vendor/bin/phpunit --check-php-configuration",
         "test":        "vendor/bin/phpunit --configuration .dev/phpunit.xml",
         "fix:dry":     "vendor/bin/php-cs-fixer fix src tests --config=.dev/php-cs-fixer.dev.php --show-progress=dots --dry-run --diff",
