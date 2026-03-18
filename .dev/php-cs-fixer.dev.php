@@ -18,6 +18,7 @@ use PhpCsFixer\Config;
 use PhpCsFixer\Finder;
 use PhpCsFixer\Runner\Parallel\ParallelConfigFactory;
 
+
 //fwrite(STDOUT, var_export(PhpCsFixer\Runner\Parallel\ParallelConfigFactory::detect(), true));
 
 $migrationRuleset = '@PHP'.\PHP_MAJOR_VERSION.'x'.\PHP_MINOR_VERSION.'Migration';
@@ -31,6 +32,7 @@ return (new Config())
     ->setUsingCache(false) // or
     //->setCacheFile(__DIR__.'/.php-cs-fixer.cache')
     ->registerCustomFixers(new \PhpCsFixerCustomFixers\Fixers())  // composer require --dev kubawerlos/php-cs-fixer-custom-fixers
+    ->registerCustomFixers(new \ErickSkrauch\PhpCsFixer\Fixers()) // composer require --dev erickskrauch/php-cs-fixer-custom-fixers
     ->registerCustomFixers(new \TheGe\PhpCsFixer\Fixers())        // composer require --dev thege/thege-phpcsfixer-fixers
     ->setFinder(
         (new Finder())
@@ -363,6 +365,7 @@ return (new Config())
         'PhpCsFixerCustomFixers/no_useless_parenthesis'        => true,
         'PhpCsFixerCustomFixers/promoted_constructor_property' => \PHP_VERSION_ID >= 80000, // [PHP 8.0+]
         'PhpCsFixerCustomFixers/stringable_interface'          => \PHP_VERSION_ID >= 80000, // [PHP 8.0+]
+        'ErickSkrauch/align_multiline_parameters'              => true,
         'TheGe/blank_lines_before_classy_block'                => true,
     ])
 ;
