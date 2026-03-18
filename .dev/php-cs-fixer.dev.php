@@ -121,7 +121,7 @@ return (new Config())
         // ------------------------------------------------------------------------------------------ Comment
         'no_empty_comment'                  => true, // @Symfony
         'multiline_comment_opening_closing' => true, // @PhpCsFixer
-        'single_line_comment_spacing'       => false, // true; @Symfony
+        'single_line_comment_spacing'       => false, // @Symfony
         'single_line_comment_style'         => ['comment_types' => ['hash']], // @Symfony
 
         // ------------------------------------------------------------------------------------------ Constant Notation
