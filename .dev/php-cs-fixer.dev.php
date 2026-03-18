@@ -12,7 +12,7 @@
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License version 2.0
  */
 
-require '../vendor/autoload.php';
+require './vendor/autoload.php';
 
 use PhpCsFixer\Config;
 use PhpCsFixer\Finder;
@@ -26,6 +26,10 @@ use TheGe\PhpCsFixer\Fixer\ClassNotation\BlankLinesBeforeClassyBlockFixer;
 
 //fwrite(STDOUT, var_export(PhpCsFixer\Runner\Parallel\ParallelConfigFactory::detect(), true));
 
+$migrationRuleset = '@PHP'.\PHP_MAJOR_VERSION.'x'.\PHP_MINOR_VERSION.'Migration';
+$phpMinVersion    = \PHP_MAJOR_VERSION * 10000 + \PHP_MINOR_VERSION * 100;
+$phpMaxVersion    = $phpMinVersion === 70400 ? 80000 : $phpMinVersion + 100;
+
 return (new Config())
     ->setParallelConfig(ParallelConfigFactory::detect())
     //->setUnsupportedPhpVersionAllowed(true)
@@ -34,7 +38,8 @@ return (new Config())
     //->setCacheFile(__DIR__.'/.php-cs-fixer.cache')
     ->registerCustomFixers(new PhpCsFixerCustomFixers\Fixers())              // composer require --dev kubawerlos/php-cs-fixer-custom-fixers
     ->registerCustomFixers([new BlankLinesBeforeClassyBlockFixer()]) // composer require --dev thege/thege-phpcsfixer-fixers
-    ->setFinder((new Finder())
+    ->setFinder(
+        (new Finder())
         ->in(__DIR__)
         ->name('*.php')
         ->name('*.inc')
@@ -45,21 +50,9 @@ return (new Config())
         ->notPath(['rector.php'])
     )
     ->setRules([ // https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/blob/master/doc/rules/index.rst
-        '@PSR12'                 => true,
-        '@PHP7x4Migration'       => 70400 <= \PHP_VERSION_ID && \PHP_VERSION_ID < 80000,
-        '@PHP7x4Migration:risky' => 70400 <= \PHP_VERSION_ID && \PHP_VERSION_ID < 80000,
-        '@PHP8x0Migration'       => 80000 <= \PHP_VERSION_ID && \PHP_VERSION_ID < 80100,
-        '@PHP8x0Migration:risky' => 80000 <= \PHP_VERSION_ID && \PHP_VERSION_ID < 80100,
-        '@PHP8x1Migration'       => 80100 <= \PHP_VERSION_ID && \PHP_VERSION_ID < 80200,
-        '@PHP8x1Migration:risky' => 80100 <= \PHP_VERSION_ID && \PHP_VERSION_ID < 80200,
-        '@PHP8x2Migration'       => 80200 <= \PHP_VERSION_ID && \PHP_VERSION_ID < 80300,
-        '@PHP8x2Migration:risky' => 80200 <= \PHP_VERSION_ID && \PHP_VERSION_ID < 80300,
-        '@PHP8x3Migration'       => 80300 <= \PHP_VERSION_ID && \PHP_VERSION_ID < 80400,
-        '@PHP8x3Migration:risky' => 80300 <= \PHP_VERSION_ID && \PHP_VERSION_ID < 80400,
-        '@PHP8x4Migration'       => 80400 <= \PHP_VERSION_ID && \PHP_VERSION_ID < 80500,
-        '@PHP8x4Migration:risky' => 80400 <= \PHP_VERSION_ID && \PHP_VERSION_ID < 80500,
-        '@PHP8x5Migration'       => 80500 <= \PHP_VERSION_ID && \PHP_VERSION_ID < 80600,
-        '@PHP8x5Migration:risky' => 80500 <= \PHP_VERSION_ID && \PHP_VERSION_ID < 80600,
+        '@PSR12'                    => true,
+        $migrationRuleset           => $phpMinVersion <= \PHP_VERSION_ID && \PHP_VERSION_ID < $phpMaxVersion,
+        "{$migrationRuleset}:risky" => $phpMinVersion <= \PHP_VERSION_ID && \PHP_VERSION_ID < $phpMaxVersion,
         // ------------------------------------------------------------------------------------------ Alias
         'array_push'                       => true, // @Symfony:risky
         'ereg_to_preg'                     => true, // @Symfony:risky
@@ -128,7 +121,7 @@ return (new Config())
         // ------------------------------------------------------------------------------------------ Comment
         'no_empty_comment'                  => true, // @Symfony
         'multiline_comment_opening_closing' => true, // @PhpCsFixer
-        'single_line_comment_spacing'       => true, // @Symfony
+        'single_line_comment_spacing'       => false, // true; @Symfony
         'single_line_comment_style'         => ['comment_types' => ['hash']], // @Symfony
 
         // ------------------------------------------------------------------------------------------ Constant Notation
@@ -244,8 +237,8 @@ return (new Config())
         ],
         'linebreak_after_opening_tag' => false,
         // ------------------------------------------------------------------------------------------ PHPDoc
-        'align_multiline_comment' => true, // @Symfony
-        'no_blank_lines_after_phpdoc' => true, // @Symfony
+        'align_multiline_comment'             => true, // @Symfony
+        'no_blank_lines_after_phpdoc'         => true, // @Symfony
         'no_empty_phpdoc'                     => true, // @Symfony
         'no_superfluous_phpdoc_tags'          => ['allow_hidden_params' => true, 'remove_inheritdoc' => true], // @Symfony
         'phpdoc_add_missing_param_annotation' => ['only_untyped' => true], // @PhpCsFixer
@@ -369,11 +362,11 @@ return (new Config())
             'space'                => 'none',
             'space_multiple_catch' => null,
         ],
-        DeclareAfterOpeningTagFixer::name()           => true,
-        NoUselessDirnameCallFixer::name()             => true,
-        NoUselessParenthesisFixer::name()             => true,
-        PromotedConstructorPropertyFixer::name()      => \PHP_VERSION_ID >= 80000, // [PHP 8.0+]
-        StringableInterfaceFixer::name()              => \PHP_VERSION_ID >= 80000, // [PHP 8.0+]
-        'TheGe/blank_lines_before_classy_block' => true,
+        DeclareAfterOpeningTagFixer::name()      => true,
+        NoUselessDirnameCallFixer::name()        => true,
+        NoUselessParenthesisFixer::name()        => true,
+        PromotedConstructorPropertyFixer::name() => \PHP_VERSION_ID >= 80000, // [PHP 8.0+]
+        StringableInterfaceFixer::name()         => \PHP_VERSION_ID >= 80000, // [PHP 8.0+]
+        'TheGe/blank_lines_before_classy_block'  => true,
     ])
 ;
