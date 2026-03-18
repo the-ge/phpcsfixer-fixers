@@ -57,7 +57,7 @@ return (new Config())
         // ------------------------------------------------------------------------------------------ Array Notation
         'no_whitespace_before_comma_in_array' => false, // @Symfony
         'trim_array_spaces'                   => true, // @Symfony
-        'whitespace_after_comma_in_array'     => ['ensure_single_space' => true], // @PhpCsFixer
+        'whitespace_after_comma_in_array'     => ['ensure_single_space' => false], // @Symfony
 
         // ------------------------------------------------------------------------------------------ Basic
         'braces_position' => [
