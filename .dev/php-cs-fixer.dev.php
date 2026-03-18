@@ -61,8 +61,9 @@ return (new Config())
         'no_mixed_echo_print'              => ['use' => 'echo'], // @Symfony:risky
         'set_type_to_cast'                 => true, // @Symfony:risky
         // ------------------------------------------------------------------------------------------ Array Notation
-        'trim_array_spaces'               => true, // @Symfony
-        'whitespace_after_comma_in_array' => ['ensure_single_space' => true], // @PhpCsFixer
+        'no_whitespace_before_comma_in_array' => false, // @Symfony
+        'trim_array_spaces'                   => true, // @Symfony
+        'whitespace_after_comma_in_array'     => ['ensure_single_space' => true], // @PhpCsFixer
 
         // ------------------------------------------------------------------------------------------ Basic
         'braces_position' => [
@@ -211,6 +212,7 @@ return (new Config())
             'operators' => [
                 '='  => 'align_single_space_minimal',
                 '=>' => 'align_single_space_minimal',
+                '|'  => 'no_space',
             ],
         ],
         'concat_space'               => ['spacing' => 'none'], // @Symfony
