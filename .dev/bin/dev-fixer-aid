@@ -1,0 +1,78 @@
+#!/bin/sh
+
+DEV_CFG_VER_FILE='.dev/state/dev_cfg_ver'
+
+query()
+{
+    version="$( curl --silent -m 10 --connect-timeout 5 'https://api.github.com/repos/the-ge/phpcsfixer-config/releases/latest' | grep '\"tag_name\":' | grep -o '[0-9]\.[0-9]\.[0-9]' )"
+
+    if [ -f "$DEV_CFG_VER_FILE" ]; then
+        sed -i "1s/.*/$version/" "$DEV_CFG_VER_FILE"
+        echo "Updated latest 'the-ge/phpcsfixer-config' version number ($version) in $DEV_CFG_VER_FILE."
+    else
+        echo "$version" > "$DEV_CFG_VER_FILE"
+        echo >> "$DEV_CFG_VER_FILE"
+        echo "Stored latest 'the-ge/phpcsfixer-config' version number ($version) in $DEV_CFG_VER_FILE."
+    fi
+}
+
+setup()
+{
+    while read -r line; do
+        remote_version="$line"
+        read -r line
+        local_version="$line"
+        break
+    done < "$DEV_CFG_VER_FILE"
+
+    [ -z "$remote_version" ] && {
+        echo 'Error: no the-ge/phpcsfixer-config remote version found. Run "composer fix:query".'
+        exit 1
+    }
+
+    if [ -n "$local_version" ] && [ "$remote_version" = "$local_version" ]; then
+echo $LINENO "$remote_version" "$local_version"
+        echo "The dev fixer configuration's version is already the latest ($remote_version)."
+    else
+echo $LINENO "$remote_version" "$local_version"
+        url="https://api.github.com/repos/the-ge/phpcsfixer-config/tarball/$remote_version"
+        cache=".dev/cache/phpcsfixer-config-$remote_version"
+        cached="$cache.tar.gz"
+        dev_fixer='.dev/php-cs-fixer.dev.php'
+
+        [ -f "$cached" ] || wget --output-document="$cached" "$url" # download release if not exists
+
+        mkdir -p "$cache" && tar xf "$cached" --directory="$cache" --strip-components=1
+        cp "$cache/src/php-cs-fixer.dist.php" "$dev_fixer"
+        # Newlines in the replacement are literal backslash-newlines.
+        # The single quote in './vendor/autoload.php' needs the '"'"' escape
+        # (more layers since we also have the b done structure).
+        # The / in ./vendor/autoload.php needs escaping as \/
+        # First-occurrence-only is handled by branching to : done after the substitution,
+        # skipping the substitution block for subsequent lines.
+        sed '/^use PhpCsFixer\\Config;$/ {
+s/.*/require '"'"'.\/vendor\/autoload.php'"'"';\
+\
+use PhpCsFixer\\Config;/
+  b done
+}
+b
+: done' "$dev_fixer" > "$dev_fixer.tmp" && mv "$dev_fixer.tmp" "$dev_fixer"
+        # update local version
+        sed -i "2s/.*/$remote_version/" "$DEV_CFG_VER_FILE"
+        echo "Updated dev fixer configuration's version from $local_version to $remote_version."
+    fi
+}
+
+main()
+{
+    action="$1"
+
+    case "$action" in
+        'query') query;;
+        'setup') setup;;
+        *) echo "Error: unknown action '$action'."; exit 1;
+    esac
+}
+
+main "$@"

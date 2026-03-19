@@ -42,17 +42,19 @@
         }
     },
     "scripts": {
-        "boot":        "composer install --optimize-autoloader",
-        "compat":      "vendor/bin/phpcs -p src tests --standard=PHPCompatibility --runtime-set testVersion 8.4",
-        "lint":        "vendor/bin/parallel-lint src tests",
-        "stan:clear":  "vendor/bin/phpstan clear-result-cache",
-        "stan":        "vendor/bin/phpstan analyse --configuration=.dev/phpstan.neon",
+        "boot":       "composer install --optimize-autoloader",
+        "compat":     "vendor/bin/phpcs -p src tests --standard=PHPCompatibility --runtime-set testVersion 8.4",
+        "lint":       "vendor/bin/parallel-lint src tests",
+        "stan:clear": "vendor/bin/phpstan clear-result-cache",
+        "stan":       "vendor/bin/phpstan analyse --configuration=.dev/phpstan.neon",
         "check":      ["@compat", "@lint", "@stan"],
-        "test:config": "vendor/bin/phpunit --check-php-configuration",
-        "test":        "vendor/bin/phpunit --configuration .dev/phpunit.xml",
-        "fix:dry":     "vendor/bin/php-cs-fixer fix src tests --config=.dev/php-cs-fixer.dev.php --show-progress=dots --dry-run --diff",
-        "fix":         "vendor/bin/php-cs-fixer fix src tests --config=.dev/php-cs-fixer.dev.php --show-progress=dots",
-        "deploy":      "composer install --no-dev --classmap-authoritative"
+        "test:cfg":   "vendor/bin/phpunit --check-php-configuration",
+        "test":       "vendor/bin/phpunit --configuration .dev/phpunit.xml",
+        "fix:query":  ".dev/bin/dev-fixer-aid query",
+        "fix:setup":  ".dev/bin/dev-fixer-aid setup",
+        "fix:dry":    "vendor/bin/php-cs-fixer fix src tests --config=.dev/php-cs-fixer.dev.php --show-progress=dots --dry-run --diff",
+        "fix":        "vendor/bin/php-cs-fixer fix src tests --config=.dev/php-cs-fixer.dev.php --show-progress=dots",
+        "deploy":     "composer install --no-dev --classmap-authoritative"
     },
     "minimum-stability": "dev",
     "prefer-stable": true

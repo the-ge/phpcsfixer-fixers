@@ -18,12 +18,11 @@ use PhpCsFixer\Config;
 use PhpCsFixer\Finder;
 use PhpCsFixer\Runner\Parallel\ParallelConfigFactory;
 
-
 //fwrite(STDOUT, var_export(PhpCsFixer\Runner\Parallel\ParallelConfigFactory::detect(), true));
 
 $migrationRuleset = '@PHP'.\PHP_MAJOR_VERSION.'x'.\PHP_MINOR_VERSION.'Migration';
 $phpMinVersion    = \PHP_MAJOR_VERSION * 10000 + \PHP_MINOR_VERSION * 100;
-$phpMaxVersion    = $phpMinVersion === 70400 ? 80000 : $phpMinVersion + 100;
+$phpMaxVersion    = $phpMinVersion + 100;
 
 return (new Config())
     ->setParallelConfig(ParallelConfigFactory::detect())
@@ -31,9 +30,9 @@ return (new Config())
     ->setRiskyAllowed(true)
     ->setUsingCache(false) // or
     //->setCacheFile(__DIR__.'/.php-cs-fixer.cache')
-    ->registerCustomFixers(new \PhpCsFixerCustomFixers\Fixers())  // composer require --dev kubawerlos/php-cs-fixer-custom-fixers
-    ->registerCustomFixers(new \ErickSkrauch\PhpCsFixer\Fixers()) // composer require --dev erickskrauch/php-cs-fixer-custom-fixers
-    ->registerCustomFixers(new \TheGe\PhpCsFixer\Fixers())        // composer require --dev thege/thege-phpcsfixer-fixers
+    ->registerCustomFixers(new PhpCsFixerCustomFixers\Fixers())  // composer require --dev kubawerlos/php-cs-fixer-custom-fixers
+    ->registerCustomFixers(new ErickSkrauch\PhpCsFixer\Fixers()) // composer require --dev erickskrauch/php-cs-fixer-custom-fixers
+    ->registerCustomFixers(new TheGe\PhpCsFixer\Fixers())        // composer require --dev thege/thege-phpcsfixer-fixers
     ->setFinder(
         (new Finder())
         ->in(__DIR__)
@@ -52,7 +51,6 @@ return (new Config())
         // ------------------------------------------------------------------------------------------ Alias
         'array_push'                       => true, // @Symfony:risky
         'ereg_to_preg'                     => true, // @Symfony:risky
-        'modernize_strpos'                 => \PHP_VERSION_ID >= 80000, // [PHP 8.0+] @PHP8x0+Migration:risky
         'no_alias_language_construct_call' => true, // @Symfony
         'no_mixed_echo_print'              => ['use' => 'echo'], // @Symfony:risky
         'set_type_to_cast'                 => true, // @Symfony:risky
@@ -114,7 +112,7 @@ return (new Config())
         'self_static_accessor'                     => true, // @PhpCsFixer
         'single_class_element_per_statement'       => ['elements' => ['const', 'property']], // @Symfony
         //'single_trait_insert_per_statement' => false, // @PSR12
-        'stringable_for_to_string' => \PHP_VERSION_ID >= 80000, // [PHP 8.0+]
+        'stringable_for_to_string' => true,
         // ------------------------------------------------------------------------------------------ Comment
         'no_empty_comment'                  => true, // @Symfony
         'multiline_comment_opening_closing' => true, // @PhpCsFixer
@@ -165,7 +163,7 @@ return (new Config())
             'trailing_comma_single_line' => false,
         ],
         'lambda_not_used_import'        => true, // @Symfony
-        'multiline_promoted_properties' => \PHP_VERSION_ID >= 80000, // [PHP8.0+]
+        'multiline_promoted_properties' => true, // [PHP8.0+]
         'native_function_invocation'    => [ // @Symfony:risky
             'exclude' => [],
             'include' => ['@compiler_optimized'],
@@ -214,7 +212,7 @@ return (new Config())
         'concat_space'               => ['spacing' => 'none'], // @Symfony
         'logical_operators'          => true, // @Symfony:risky
         'long_to_shorthand_operator' => true, // @Symfony:risky
-        'new_expression_parentheses' => \PHP_VERSION_ID >= 80000 ? ['use_parentheses' => true] : false, // [PHP 8.0+] @PHP8x4+Migration
+        'new_expression_parentheses' => ['use_parentheses' => true], // @PHP8x4+Migration
         'new_with_parentheses'       => [ // @Symfony
             'anonymous_class' => false,
             'named_class'     => true,
@@ -363,8 +361,8 @@ return (new Config())
         'PhpCsFixerCustomFixers/declare_after_opening_tag'     => true,
         'PhpCsFixerCustomFixers/no_useless_dirname_call'       => true,
         'PhpCsFixerCustomFixers/no_useless_parenthesis'        => true,
-        'PhpCsFixerCustomFixers/promoted_constructor_property' => \PHP_VERSION_ID >= 80000, // [PHP 8.0+]
-        'PhpCsFixerCustomFixers/stringable_interface'          => \PHP_VERSION_ID >= 80000, // [PHP 8.0+]
+        'PhpCsFixerCustomFixers/promoted_constructor_property' => true,
+        'PhpCsFixerCustomFixers/stringable_interface'          => true,
         'ErickSkrauch/align_multiline_parameters'              => true,
         'TheGe/blank_lines_before_classy_block'                => true,
     ])
