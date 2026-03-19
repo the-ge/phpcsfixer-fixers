@@ -43,7 +43,11 @@
     },
     "scripts": {
         "boot":       "composer install --optimize-autoloader",
-        "compat":     "vendor/bin/phpcs -p src tests --standard=PHPCompatibility --runtime-set testVersion 8.4",
+        "compat":     [
+            "phpversion=\"$( php -r 'echo PHP_MAJOR_VERSION.\".\".PHP_MINOR_VERSION;' )\"",
+            "echo \"Compatibility check for PHP $phpversion:\"",
+            "vendor/bin/phpcs -p src --standard=PHPCompatibility --runtime-set testVersion \"$phpversion\""
+        ],
         "lint":       "vendor/bin/parallel-lint src tests",
         "stan:clear": "vendor/bin/phpstan clear-result-cache",
         "stan":       "vendor/bin/phpstan analyse --configuration=.dev/phpstan.neon",
