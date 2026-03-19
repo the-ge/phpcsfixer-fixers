@@ -51,7 +51,13 @@
         "lint":       "vendor/bin/parallel-lint src tests",
         "stan:clear": "vendor/bin/phpstan clear-result-cache",
         "stan":       "vendor/bin/phpstan analyse --configuration=.dev/phpstan.neon",
-        "check":      ["@compat", "@lint", "@stan"],
+        "check":      [
+            "@compat",
+            "echo -e \"\\n----------------------------------------\\n\"",
+            "@lint",
+            "echo -e \"\\n----------------------------------------\\n\"",
+            "@stan"
+        ],
         "test:cfg":   "vendor/bin/phpunit --check-php-configuration",
         "test":       "vendor/bin/phpunit --configuration .dev/phpunit.xml",
         "fix:query":  ".dev/bin/dev-fixer-aid query",
